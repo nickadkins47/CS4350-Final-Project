@@ -1,0 +1,11 @@
+.vs
+.vscode
+cwin64/
+clin/
+clin64/
+build_linuxDbg/
+build_linuxRel/
+nix/
+linux/
+lin_rel/
+lin_deb/
