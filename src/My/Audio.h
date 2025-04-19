@@ -8,10 +8,10 @@ using std::string;
 #include "Vector.h"
 #include "VectorFwd.h"
 
-#include "MyCam.h"
+#include "Cam.h"
 
 //cant get irrklang to work otherwise (included from usr/include)
-#include "../../../include/irrklang/include/irrKlang.h"
+#include "../../../../include/irrklang/include/irrKlang.h"
 using namespace irrklang;
 
 // Turn Aftr Vector to IrrKlang Vector

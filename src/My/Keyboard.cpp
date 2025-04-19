@@ -1,5 +1,5 @@
 
-#include "MyKeyboard.h"
+#include "Keyboard.h"
 
 MyKeyboard::MyKey const& MyKeyboard::at(SDL_Keycode const& keycode) {
     return keys[keycode];

@@ -3,7 +3,7 @@
 
 #include "Camera.h"
 #include "Model.h"
-#include "MyKeyboard.h"
+#include "Keyboard.h"
 
 class MyCam {
 public:

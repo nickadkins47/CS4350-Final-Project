@@ -20,7 +20,7 @@ default: ex_rls # Set default target
 rls=.\cwin64\Release\$(proj_name).exe #release executable
 dbg=.\cwin64\Debug\$(proj_name).exe #debug executable
 sln=.\cwin64\$(proj_name).sln #solution file
-src=.\src\**.cpp .\src\**.h #cpp/h files
+src=.\src\**.cpp .\src\**.h .\src\My\* #cpp/h files
 
 # === Release ===
 
@@ -54,4 +54,4 @@ paths:
 # === Clean ===
 
 clean: #clean, just removes cwin64
-	@rmdir /S .\cwin64
+	@rmdir .\cwin64 /S

@@ -10,8 +10,8 @@ set_property( GLOBAL PROPERTY USE_FOLDERS ON )
 
 #These are the files that will appear in the output project (ie, in MSVC, this will be in the vcxproj)
 #All cpp files that ought to be compiled in this project must be included here
-FILE( GLOB sources ${CMAKE_SOURCE_DIR}/*.cpp )
-FILE( GLOB headers ${CMAKE_SOURCE_DIR}/*.h )
+FILE( GLOB sources ${CMAKE_SOURCE_DIR}/*.cpp ${CMAKE_SOURCE_DIR}/My/*.cpp )
+FILE( GLOB headers ${CMAKE_SOURCE_DIR}/*.h  ${CMAKE_SOURCE_DIR}/My/*.h )
 message( STATUS "HEADERS: ${headers}" )
 message( STATUS "SOURCES: ${sources}" )
 

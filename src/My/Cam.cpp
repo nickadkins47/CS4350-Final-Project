@@ -1,6 +1,6 @@
 
 #include <stdexcept>
-#include "MyCam.h"
+#include "Cam.h"
 
 void MyCam::update() {
     if (camPtr == nullptr) throw std::runtime_error("myCam's camPtr == nullptr");

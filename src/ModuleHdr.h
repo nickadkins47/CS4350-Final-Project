@@ -53,22 +53,20 @@ protected:
    MyKeyboard keyboard;
    MyCam camera;
    MyAudioManager audioman;
-   sptr<NetMessengerClient> client = nullptr;
 
    WOImGui* gui = nullptr;
    AftrImGui_MenuBar menu;
    AftrImGui_WO_Editor wo_editor;
-   OrbitGui orbit_gui;
-   MyGUI_ObjectMovements obj_move_gui;
+   //OrbitGui orbit_gui;
+   //MyGUI_ObjectMovements obj_move_gui;
+   /* 
    WO* moon = nullptr;
    WO* moon2 = nullptr;
    WO* mySphere = nullptr;
    WO* gulfstream = nullptr;
-   WO* gulfstream2 = nullptr;
-
-  /*  WO* spider = nullptr;
-   WO* duck = nullptr;
-   WO* cube = nullptr; */
+   WO* gulfstream2 = nullptr; */
+   
+   //svector<MyCube> cubes;
 
 };
 
