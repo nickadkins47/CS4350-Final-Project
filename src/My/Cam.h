@@ -12,10 +12,10 @@ public:
     void update();
 
     //Pointer to Keyboard for Movement inputs
-    MyKeyboard* kbdPtr = nullptr;
+    inline static MyKeyboard* kbdPtr = nullptr;
 
     //Pointer to main camera (Aftr::Camera*)
-    Aftr::Camera** camPtr = nullptr;
+    inline static Aftr::Camera** camPtr = nullptr;
 
     //arrow operator just returns the "cam" this MyCam points to
     Aftr::Camera* operator->();

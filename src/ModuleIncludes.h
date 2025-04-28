@@ -4,8 +4,6 @@
 //Broke Down ModuleGLView into several smaller files
 //This: All of the include statements thrown into a single file
 
-#include <chrono>
-
 #include "AftrGLRendererBase.h"
 #include "AftrImGui_MenuBar.h"
 #include "AftrImGui_WO_Editor.h"
@@ -49,13 +47,12 @@
 #include "WOWayPointSpherical.h"
 #include "WorldList.h"
 
+#include "ThirdParty/PerlinNoise.h"
+
+#include "My/StdIncludes.h" //Files imported from standard library
 #include "My/Keyboard.h" //My custom class for handling keyboard input
 #include "My/Cam.h" //My custom header for camera controls
 #include "My/GUIs.h" //My GUIs I made
 #include "My/Audio.h" //Audio manager
-
-#include "My/Cube.h" //Minecraft Cube
-
-using std::string;
-template<typename T> using sptr = std::shared_ptr<T>;
-template<typename T> using svector = std::vector<T>;
+#include "My/CubeIDs.h" //Described types of Cubes & how to get their textures
+#include "My/Grid.h" //Grid of Cubes, handles rendering them (for now)

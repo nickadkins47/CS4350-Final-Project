@@ -66,11 +66,3 @@ bool Module::WOIsBetweenTwoOthers(WO const *const wo1, WO *const wo2, WO const *
    );
    return (ret == Aftr::AftrGeometricTerm::geoSUCCESS);
 }
-
-string Module::LMM( string const& input ) {
-   return ManagerEnvironmentConfiguration::getLMM() + input;
-}
-
-string Module::SMM( string const& input ) {
-   return ManagerEnvironmentConfiguration::getSMM() + input;
-}

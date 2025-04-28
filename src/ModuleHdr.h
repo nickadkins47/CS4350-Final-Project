@@ -44,12 +44,6 @@ protected:
    //Check if wo2 is between wo1 & wo3 (via getNearestPointWhereLineIntersectsMe)
    bool WOIsBetweenTwoOthers(WO const *const wo1, WO *const wo2, WO const *const wo3);
 
-   //Get Local Multimedia Path ( module/mm/{input} )
-   string LMM( string const& input );
-
-   //Get Shared Multimedia Path ( usr/shared/mm/{input} )
-   string SMM( string const& input );
-
    MyKeyboard keyboard;
    MyCam camera;
    MyAudioManager audioman;
@@ -57,16 +51,8 @@ protected:
    WOImGui* gui = nullptr;
    AftrImGui_MenuBar menu;
    AftrImGui_WO_Editor wo_editor;
-   //OrbitGui orbit_gui;
-   //MyGUI_ObjectMovements obj_move_gui;
-   /* 
-   WO* moon = nullptr;
-   WO* moon2 = nullptr;
-   WO* mySphere = nullptr;
-   WO* gulfstream = nullptr;
-   WO* gulfstream2 = nullptr; */
-   
-   //svector<MyCube> cubes;
+
+   MyGrid grid; // 100 x 100 x 20 grid of cubes
 
 };
 

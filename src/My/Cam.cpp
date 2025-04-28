@@ -13,14 +13,16 @@ void MyCam::update() {
     const bool up      = kbdPtr->isKeyDown(SDLK_e);
     const bool down    = kbdPtr->isKeyDown(SDLK_q);
 
+    const bool fast    = kbdPtr->isKeyDown(SDLK_LSHIFT) || kbdPtr->isKeyDown(SDLK_RSHIFT);
+
     const Aftr::Model* const camModel = (*camPtr)->getModel();
 
     prevPos = (*camPtr)->getPosition();
 
     (*camPtr)->setPosition( 
-        ( camModel->getRelXDir() * (forward - back ) ) +
-        ( camModel->getRelYDir() * (   left - right) ) +
-        ( camModel->getRelZDir() * (     up - down ) ) +
+        ( camModel->getRelXDir() * (forward - back ) * (fast? 4:1) ) +
+        ( camModel->getRelYDir() * (   left - right) * (fast? 4:1) ) +
+        ( camModel->getRelZDir() * (     up - down ) * (fast? 4:1) ) +
         prevPos
     );
 }

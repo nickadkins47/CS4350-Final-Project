@@ -1,13 +1,10 @@
 
 #pragma once
 
-#include <string>
-using std::string;
-#include <map>
-
 #include "Vector.h"
 #include "VectorFwd.h"
 
+#include "StdIncludes.h"
 #include "Cam.h"
 
 //cant get irrklang to work otherwise (included from usr/include)
@@ -62,7 +59,7 @@ public:
 
     ISoundEngine* operator->();
 
-    MyCam* mycamPtr = nullptr;
+    inline static MyCam* mycamPtr = nullptr;
 
 private:
     ISoundEngine* engine = nullptr;
