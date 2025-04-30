@@ -10,10 +10,14 @@ void Module::loadMap() {
    this->actorLst = new WorldList();
    this->netLst = new WorldList();
 
+   //Set static pointers
    MyCam::camPtr = &cam;
    MyCam::kbdPtr = &keyboard;
    MyAudioManager::mycamPtr = &camera;
-   MyGrid::worldLst = &worldLst;
+   MyChunk::worldLst = &worldLst;
+   //MyChunk::grid = &grid;
+
+   //Load cube textures
    load_CubeID_TXTs();
 
    ManagerOpenGLState::GL_CLIPPING_PLANE(1000.0);
@@ -22,7 +26,7 @@ void Module::loadMap() {
    Axes::isVisible = true;
    this->glRenderer->isUsingShadowMapping(false); //set to TRUE to enable shadow mapping, must be using GL 3.2+
 
-   this->cam->setPosition(0,-20,20);
+   this->cam->setPosition(-20,0,100);
 
    setSkyBox(SMM("images/skyboxes/early_morning+6.jpg"));
 
@@ -38,26 +42,21 @@ void Module::loadMap() {
       worldLst->push_back(light);
    }
 
+   MyChunk::seed = ManagerRandomNumber::getRandomUnsignedInt(
+      0U, std::numeric_limits<unsigned int>::max()
+   );
+
    {
-      grid.at(0,0,10) = CubeID::TEST;
-
-      auto const randSeed = Aftr::ManagerRandomNumber::getRandomUnsignedInt;
-      unsigned int const uintmax = std::numeric_limits<unsigned int>::max();
-      siv::PerlinNoise::seed_type const seed = randSeed(0U, uintmax);
-
-	   siv::PerlinNoise const perlin(seed);
-
-      for (int x = 0; x < 10; x++) {
-         for (int y = 0; y < 10; y++) {
-            const int z = 5 * perlin.octave2D_01(x*.0625f, y*.0625f, 6);
-            grid.at(x,y,z) = CubeID::GRASS;
-            for (int uz = z - 1; uz >= 0; uz--) {
-               grid.at(x,y,uz) = CubeID::DIRT;
-            }
-         }
-      }
-
-      grid.render();
+      grid.at(1,1,10) = CubeID::TEST;
+      keyboard[SDLK_1].onKeyDown = [this](){ grid.load(-1,-1); };
+      keyboard[SDLK_2].onKeyDown = [this](){ grid.load(-1, 0); };
+      keyboard[SDLK_3].onKeyDown = [this](){ grid.load(-1, 1); };
+      keyboard[SDLK_4].onKeyDown = [this](){ grid.load( 0,-1); };
+      keyboard[SDLK_5].onKeyDown = [this](){ grid.load( 0, 0); };
+      keyboard[SDLK_6].onKeyDown = [this](){ grid.load( 0, 1); };
+      keyboard[SDLK_7].onKeyDown = [this](){ grid.load( 1,-1); };
+      keyboard[SDLK_8].onKeyDown = [this](){ grid.load( 1, 0); };
+      keyboard[SDLK_9].onKeyDown = [this](){ grid.load( 1, 1); };
    }
 
    {

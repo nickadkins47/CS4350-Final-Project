@@ -1,43 +1,26 @@
 
 #pragma once
 
-#include "IndexedGeometryQuad.h"
-#include "Model.h"
-#include "WOQuad.h"
-#include "WorldContainer.h"
-
 #include "CubeIDs.h"
+#include "Chunk.h"
 
 class MyGrid {
 public:
     MyGrid();
     ~MyGrid();
 
-    //returns reference to the block ID at (x,y,z)
+    MyChunk& chunk(int const& cx, int const& cy);
     CubeID& at(int const& x, int const& y, int const& z);
 
-    //render this grid
-    void render();
+    void load(int const& cx, int const& cy);
 
-    inline static Aftr::WorldContainer** worldLst;
+    inline static const size_t sz_x = 8;
+    inline static const size_t sz_y = 8;
 
 private:
-    inline static const size_t x_dim = 100;
-    inline static const size_t y_dim = 100;
-    inline static const size_t z_dim = 20;
 
-    inline static const float quadSize = 10.0f;
+    void render(int const& cx, int const& cy);
 
-    std::array<std::array<std::array<CubeID, z_dim>, y_dim>, x_dim> grid {};
-    //svector<Aftr::WOQuad*> quads;
-    
-    void renderCube(int const& x, int const& y, int const& z, six<Aftr::Tex> const& textures);
-    
-    void renderQuad(
-        size_t const& face, Aftr::Vector const& position,
-        Aftr::QuadOrientation const& orientation, Aftr::Tex const& tex
-    );
-
-    bool isBlank(int const& x, int const& y, int const& z);
+    std::array<std::array<MyChunk, sz_x>, sz_y> _grid; //Grid of Chunks, each of which is a 16x16x32 grid
 
 };

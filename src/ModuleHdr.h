@@ -52,7 +52,7 @@ protected:
    AftrImGui_MenuBar menu;
    AftrImGui_WO_Editor wo_editor;
 
-   MyGrid grid; // 100 x 100 x 20 grid of cubes
+   MyGrid grid; //Grid of Chunks, each of which is a 16x16x32 grid
 
 };
 

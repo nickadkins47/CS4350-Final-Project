@@ -47,12 +47,11 @@
 #include "WOWayPointSpherical.h"
 #include "WorldList.h"
 
-#include "ThirdParty/PerlinNoise.h"
-
 #include "My/StdIncludes.h" //Files imported from standard library
 #include "My/Keyboard.h" //My custom class for handling keyboard input
 #include "My/Cam.h" //My custom header for camera controls
 #include "My/GUIs.h" //My GUIs I made
 #include "My/Audio.h" //Audio manager
 #include "My/CubeIDs.h" //Described types of Cubes & how to get their textures
-#include "My/Grid.h" //Grid of Cubes, handles rendering them (for now)
+#include "My/Chunk.h" //16x16x32 chunk of cubes
+#include "My/Grid.h" //grid of chunks
