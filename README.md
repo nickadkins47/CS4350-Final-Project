@@ -22,7 +22,7 @@ Main Milestones (in order of completion):
 - [x] (Apr 18th) Interim Report
 - [x] (Apr 22nd) Implement a terrain generation algorithm to randomly create this sized grid of blocks, with varying heights/elevations.
 - [x] (Apr 25th) Blog Post
-- [x] (Apr 26th) Organize these blocks into chunks. Terrain generation will generate chunks instead (Still only a limited world, perhaps only 8 chunks by 8 chunks).
+- [x] (Apr 26th) Organize these blocks into chunks. Terrain generation will generate chunks instead (Still only a limited world, only 10x10 chunks).
 - [x] (Apr 29th) Implement several other optimization techniques to improve the performance of the simulation.
 - [x] (Apr 30th) Code Review / Freeze
 - [ ] (May 1st) Final Report
