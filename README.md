@@ -1,7 +1,5 @@
 
 # CS4350 Final Project - Nicholas Adkins
-
-### Abstract
 Here is my work on implementing a Minecraft clone into the AftrBurner Engine, namely being able to create a randomly generated terrain using some sort of pre-existing algorithm, alongside implementing the game's chunk rendering system to make displaying several thousand blocks feasible & efficient.
 
 ### Motivation
