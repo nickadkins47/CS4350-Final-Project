@@ -1,5 +1,5 @@
 
-#pragma once
+/* #pragma once
 
 #include <string>
 
@@ -28,4 +28,4 @@ public:
     void update();
 };
 
-#endif
+#endif */

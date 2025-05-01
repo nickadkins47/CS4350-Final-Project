@@ -17,7 +17,7 @@
 */
 int main( int argc, char* argv[] )
 {
-   std::vector< std::string > args{ argv, argv + argc }; ///< Command line arguments passed via argc and argv, reserved to size of argc
+   svector<string> args { argv, argv + argc }; ///< Command line arguments passed via argc and argv, reserved to size of argc
    int simStatus = 0;
 
    do

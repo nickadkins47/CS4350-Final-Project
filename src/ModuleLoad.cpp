@@ -13,20 +13,19 @@ void Module::loadMap() {
    //Set static pointers
    MyCam::camPtr = &cam;
    MyCam::kbdPtr = &keyboard;
-   MyAudioManager::mycamPtr = &camera;
+   //MyAudioManager::mycamPtr = &camera;
    MyChunk::worldLst = &worldLst;
-   //MyChunk::grid = &grid;
 
    //Load cube textures
    load_CubeID_TXTs();
 
-   ManagerOpenGLState::GL_CLIPPING_PLANE(1000.0);
+   ManagerOpenGLState::GL_CLIPPING_PLANE(1500.0);
    ManagerOpenGLState::GL_NEAR_PLANE(0.1f);
    ManagerOpenGLState::enableFrustumCulling(true);
    Axes::isVisible = true;
    this->glRenderer->isUsingShadowMapping(false); //set to TRUE to enable shadow mapping, must be using GL 3.2+
 
-   this->cam->setPosition(-20,0,100);
+   this->cam->setPosition(0,0,200);
 
    setSkyBox(SMM("images/skyboxes/early_morning+6.jpg"));
 
@@ -55,32 +54,23 @@ void Module::loadMap() {
    }
 
    {
-      gui = WOImGui::New( nullptr );
-      gui->setLabel( "My Gui" );
-      //callbacks -- When the user toggles the checkbox from the menu, call these callbacks:
+      gui = WOImGui::New(nullptr);
+      gui->setLabel("My Gui");
       
-      //This callback shows the WOEditor window. It will be visible when the user
-      //selected Menu -> Edit -> Show WO Editor (as linked up below).
       auto woEditFunc = [this]() { 
          this->wo_editor.draw( this->getLastSelectionQuery(), *this->getWorldContainer(), this->getCamera_functor() ); 
       };
 
-      //We will put these demo items under the "Demo" menu
-      auto showDemoWindow_ImGui     = [this]() { ImGui::ShowDemoWindow(); };
+      /* auto showDemoWindow_ImGui     = [this]() { ImGui::ShowDemoWindow(); };
       auto showDemoWindow_AftrDemo  = [this]() { WOImGui::draw_AftrImGui_Demo(gui); };
-      auto showDemoWindow_ImGuiPlot = [this]() { ImPlot::ShowDemoWindow(); };
-      //auto show_moon_orbit_params   = [this]() { orbit_gui.draw(); };
-      //auto show_My_ObjMovement      = [this]() { obj_move_gui.draw(); };
+      auto showDemoWindow_ImGuiPlot = [this]() { ImPlot::ShowDemoWindow(); }; */
 
       gui->subscribe_drawImGuiWidget([=,this](){
-         //We defined the callbacks above, now hook them into the menu labels
          menu.attach( "Edit", "Show WO Editor", woEditFunc );
-         menu.attach( "Demos", "Show Default ImGui Demo", showDemoWindow_ImGui );
+         /* menu.attach( "Demos", "Show Default ImGui Demo", showDemoWindow_ImGui );
          menu.attach( "Demos", "Show Default ImPlot Demo", showDemoWindow_ImGuiPlot );
-         menu.attach( "Demos", "Show Aftr ImGui w/ Markdown & File Dialogs", showDemoWindow_AftrDemo );
-         //menu.attach( "Orbit Gui", "Show Orbit", show_moon_orbit_params );
-         //menu.attach( "Move Object", "Show Object Mover", show_My_ObjMovement );
-         menu.draw(); //The menu.draw() is the entry point for your gui. It is called once per frame to draw the GUI.
+         menu.attach( "Demos", "Show Aftr ImGui w/ Markdown & File Dialogs", showDemoWindow_AftrDemo ); */
+         menu.draw();
       });
       worldLst->push_back( gui );
    }

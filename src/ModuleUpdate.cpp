@@ -9,6 +9,6 @@ void Module::updateWorld() {
    GLView::updateWorld();
 
    camera.update();
-   audioman.updateListenerPos();
+   //audioman.updateListenerPos();
 
 }

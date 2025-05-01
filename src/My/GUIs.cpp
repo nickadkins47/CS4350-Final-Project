@@ -1,5 +1,5 @@
 
-#include "GUIs.h"
+/* #include "GUIs.h"
 
 void MyGUI_ObjectMovements::draw() {
     if (ImGui::Begin("Change Object Position")) {
@@ -35,4 +35,4 @@ void MyGUI_InfoTab::draw() {
 
 void MyGUI_InfoTab::update() {
     
-}
+} */

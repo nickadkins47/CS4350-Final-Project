@@ -10,7 +10,7 @@ string SMM(string const& input) {
 }
 
 void load_CubeID_TXTs() {
-    auto const getTXTs = [](six<string> const& filePaths) -> six<Aftr::Tex> {
+    auto static const getTXTs = [](six<string> const& filePaths) -> six<Aftr::Tex> {
         return {
             *Aftr::ManagerTex::loadTexAsync(filePaths[0]),
             *Aftr::ManagerTex::loadTexAsync(filePaths[1]),

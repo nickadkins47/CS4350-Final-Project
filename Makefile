@@ -29,7 +29,8 @@ ex_rls: $(rls) #execute release build
 
 bl_rls $(rls): $(sln) $(src) #build release
 	@cd .\cwin64 && msbuild .\$(proj_name).sln /p:Configuration=Release
-	@$(MAKE) /F DLLs.mk mode=Release
+#	@$(MAKE) /F DLLs.mk mode=Release
+# dont need the irrklang dll for this project
 
 # === Debug ===
 
@@ -38,7 +39,8 @@ ex_dbg: $(dbg) #execute debug build
 
 bl_dbg $(dbg): $(sln) $(src) #build debug
 	@cd .\cwin64 && msbuild .\$(proj_name).sln /p:Configuration=Debug
-	@$(MAKE) /F DLLs.mk mode=Debug
+#	@$(MAKE) /F DLLs.mk mode=Debug
+# dont need the irrklang dll for this project
 
 # === Solution ===
 

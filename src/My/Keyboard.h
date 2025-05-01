@@ -10,6 +10,7 @@
 class MyKeyboard {
 public:
 
+    //stores things to do upon pressing a given key
     struct MyKey {
     public:
         std::function<void(void)> onKeyDown = [](){return;};
@@ -17,16 +18,16 @@ public:
         bool isKeyDown = false;
     };
 
-    MyKey const& at(SDL_Keycode const& keycode);
-    MyKey& operator[](SDL_Keycode const& keycode);
+    MyKey const& at(SDL_Keycode const& keycode); //return const& to key 
+    MyKey& operator[](SDL_Keycode const& keycode); //return reference to key
 
-    void onKeyDown(SDL_Keycode const& keycode);
-    void onKeyUp(SDL_Keycode const& keycode);
+    void onKeyDown(SDL_Keycode const& keycode); //triggers when key is pressed
+    void onKeyUp(SDL_Keycode const& keycode); //triggers when key is released
 
     bool isKeyDown(SDL_Keycode const& keycode);
     bool isKeyUp(SDL_Keycode const& keycode);
 
 protected:
-    std::map<SDL_Keycode, MyKey> keys;
+    std::unordered_map<SDL_Keycode, MyKey> keys;
 
 };

@@ -1,5 +1,5 @@
 
-#pragma once
+/* #pragma once
 
 #include "Vector.h"
 #include "VectorFwd.h"
@@ -66,3 +66,4 @@ private:
     std::map<string,ISound*> soundMap;
 
 };
+ */

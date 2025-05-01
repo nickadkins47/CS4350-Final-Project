@@ -41,17 +41,17 @@ void MyChunk::registerCube(
         Aftr::Vector{gx+qs, gy+qs, gz+qs},
     };
 
-    if (isBlank[0]) { vertexValues.append_range(fourAftrVecsAsFloats(v[0], v[1], v[3], v[2])); numQuads++; }
-    if (isBlank[1]) { vertexValues.append_range(fourAftrVecsAsFloats(v[4], v[5], v[7], v[6])); numQuads++; }
-    if (isBlank[2]) { vertexValues.append_range(fourAftrVecsAsFloats(v[0], v[1], v[5], v[4])); numQuads++; }
-    if (isBlank[3]) { vertexValues.append_range(fourAftrVecsAsFloats(v[2], v[3], v[7], v[6])); numQuads++; }
-    if (isBlank[4]) { vertexValues.append_range(fourAftrVecsAsFloats(v[0], v[2], v[6], v[4])); numQuads++; }
-    if (isBlank[5]) { vertexValues.append_range(fourAftrVecsAsFloats(v[1], v[3], v[7], v[5])); numQuads++; }
+    if (isBlank[0]) { quadData.append_range(fourAftrVecsAsFloats(v[0], v[1], v[3], v[2])); numQuads++; }
+    if (isBlank[1]) { quadData.append_range(fourAftrVecsAsFloats(v[4], v[5], v[7], v[6])); numQuads++; }
+    if (isBlank[2]) { quadData.append_range(fourAftrVecsAsFloats(v[0], v[1], v[5], v[4])); numQuads++; }
+    if (isBlank[3]) { quadData.append_range(fourAftrVecsAsFloats(v[2], v[3], v[7], v[6])); numQuads++; }
+    if (isBlank[4]) { quadData.append_range(fourAftrVecsAsFloats(v[0], v[2], v[6], v[4])); numQuads++; }
+    if (isBlank[5]) { quadData.append_range(fourAftrVecsAsFloats(v[1], v[3], v[7], v[5])); numQuads++; }
 }
 
-void MyChunk::render() {
-    rquads = Aftr::WORawQuads::New(vertexValues.data(), numQuads);
-    //rquads->getModel()->getSkin().getMultiTextureSet().at(0) = *ManagerTex::loadTexAsync(LMM("images/grass_side.png"));
+void MyChunk::render(int const& cx, int const& cy) {
+    rquads = Aftr::WORawQuads::New(quadData.data(), numQuads);
+    rquads->setLabel(fmt::format("Chunk({},{})", cx, cy));
     (*worldLst)->push_back(rquads);
 }
 

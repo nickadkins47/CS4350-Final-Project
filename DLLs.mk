@@ -1,4 +1,6 @@
 
+# FINAL PROJECT: feel free to delete this file, im not using irrklang for this project
+
 # Seperate makefile for handling DLLs (changes depending on the project)
 
 IRK_BIN = C:\repos\aftr\usr\include\irrklang\bin\winx64-visualStudio

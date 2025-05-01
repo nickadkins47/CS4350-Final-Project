@@ -1,9 +1,9 @@
 
-# Got tired of using Microsoft's crappy makefile ripoff, decided
-# to just use a python script that emulates makefile close enough
-# 
-# Also note: MSBuild is still required, make sure it's in
-# your path somewhere. Mine is at:
+# FINAL PROJECT: was gonna try using a python script as a subsitute for
+# nmake, but never finished it
+
+# Also note: MSBuild is still required, make sure 
+# it's in your path somewhere. Mine is at:
 # C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\MSBuild.exe
 
 import subprocess, os

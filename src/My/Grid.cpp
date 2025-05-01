@@ -50,7 +50,7 @@ void MyGrid::load(int const& cx, int const& cy) {
             }
         }
     }
-    chk.render();
+    chk.render(cx,cy);
 }
 
 bool MyGrid::isOpen(int const& x, int const& y, int const& z) {
