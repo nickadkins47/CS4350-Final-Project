@@ -21,34 +21,39 @@ CubeID& MyGrid::at(int const& x, int const& y, int const& z) {
 }
 
 void MyGrid::load(int const& cx, int const& cy) {
+    MyChunk& chk = this->chunk(cx,cy);
+    if (chk.isRendered) return;
+
     for (int const& xs : {-1,0,1}) { //generate all neighboring chunks
         for (int const& ys : {-1,0,1}) {
-            MyChunk& chk = this->chunk(cx+xs,cy+ys);
-            if (!chk.isGenerated) chk.generate(cx+xs,cy+ys);
+            MyChunk& neighbor = this->chunk(cx+xs,cy+ys);
+            if (!neighbor.isGenerated) neighbor.generate(cx+xs,cy+ys);
         }
     }
-    this->render(cx, cy);
-}
 
-void MyGrid::render(int const& cx, int const& cy) {
-    MyChunk& chk = this->chunk(cx,cy);
     for (size_t lx = 0; lx < chk.x_dim; lx++) { //local x
         int const x = lx + (cx * chk.x_dim); //global x
         for (size_t ly = 0; ly < chk.y_dim; ly++) { //local y
             int const y = ly + (cy * chk.y_dim); //global y
             for (size_t z = 0; z < chk.z_dim; z++) { //local & global z
                 //if (x,y,z) is 0 (air) or undefined, dont draw any quads for that block
-                if (!CubeID_TXTs.contains(at(x,y,z))) continue;
-                six<bool> const isBlank = {
-                    !CubeID_TXTs.contains(at(x-1,y,z)), //is block at(x,y,z) air/empty/invalid?
-                    !CubeID_TXTs.contains(at(x+1,y,z)),
-                    !CubeID_TXTs.contains(at(x,y-1,z)),
-                    !CubeID_TXTs.contains(at(x,y+1,z)),
-                    !CubeID_TXTs.contains(at(x,y,z-1)),
-                    !CubeID_TXTs.contains(at(x,y,z+1))
+                if (isOpen(x,y,z)) continue;
+                six<bool> const openSides = {
+                    isOpen(x-1,y,z), //is block at(x,y,z) air/empty/invalid?
+                    isOpen(x+1,y,z),
+                    isOpen(x,y-1,z),
+                    isOpen(x,y+1,z),
+                    isOpen(x,y,z-1),
+                    isOpen(x,y,z+1),
                 };
-                chk.renderCube(x, y, z, CubeID_TXTs[chk.at(lx,ly,z)], isBlank);
+                chk.registerCube(x, y, z, CubeID_TXTs[chk.at(lx,ly,z)], openSides);
             }
         }
     }
+    chk.render();
+}
+
+bool MyGrid::isOpen(int const& x, int const& y, int const& z) {
+    if (z < 0 || z >= MyChunk::z_dim) return false;
+    return !CubeID_TXTs.contains(at(x,y,z));
 }

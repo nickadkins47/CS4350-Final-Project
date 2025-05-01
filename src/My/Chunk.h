@@ -4,6 +4,7 @@
 #include "IndexedGeometryQuad.h"
 #include "Model.h"
 #include "WOQuad.h"
+#include "WORawQuads.h"
 #include "WorldContainer.h"
 
 #include "../ThirdParty/PerlinNoise.h"
@@ -23,12 +24,15 @@ public:
     //generate this chunk's data
     void generate(int const& cx, int const& cy);
 
-    void renderCube(
+    void registerCube(
         int const& x, int const& y, int const& z,
-        six<Aftr::Tex> const& textures, six<bool> const& isBlank
+        six<Aftr::Tex> const& textures, six<bool> const& openSides
     );
 
+    void render();
+
     bool isGenerated = false;
+    bool isRendered = false;
 
     inline static Aftr::WorldContainer** worldLst;
     inline static siv::PerlinNoise::seed_type seed = 0;
@@ -38,17 +42,20 @@ public:
     inline static const size_t z_dim = 32;
 
 private:
-    
-    void renderQuad(
-        size_t const& face, Aftr::Vector const& position,
-        Aftr::QuadOrientation const& orientation, Aftr::Tex const& tex
+
+    static std::array<float, 12> fourAftrVecsAsFloats(
+        Aftr::Vector const& v1, Aftr::Vector const& v2, Aftr::Vector const& v3, Aftr::Vector const& v4
     );
 
-    static double perlin2d(double x, double y, double scale, int32_t octaves, double persistence = 0.5);
+    static double perlin2d(double x, double y, double scale, double shift, int32_t octaves, double persistence = 0.5);
 
     std::array<std::array<std::array<CubeID, z_dim>, y_dim>, x_dim> _chunk {};
-    //svector<Aftr::WOQuad*> quads;
 
-    inline static const float quadSize = 10.0f;
+    svector<float> vertexValues; //used for WORawQuads
+    size_t numQuads = 0;
+
+    Aftr::WORawQuads* rquads = nullptr;
+
+    inline static const float qs = 10.0f; //"quadSize": physical size of a quad / side of a cube
 
 };

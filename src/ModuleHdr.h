@@ -53,6 +53,7 @@ protected:
    AftrImGui_WO_Editor wo_editor;
 
    MyGrid grid; //Grid of Chunks, each of which is a 16x16x32 grid
+   WORawQuads* rquads = nullptr; //test
 
 };
 

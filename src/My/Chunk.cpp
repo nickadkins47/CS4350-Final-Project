@@ -13,7 +13,7 @@ void MyChunk::generate(int const& cx, int const& cy) {
         int const gx = x + (cx * x_dim); //global x
         for (int y = 0; y < y_dim; y++) { //local y
             int const gy = y + (cy * y_dim); //global y
-            const int z = int(perlin2d(gx*.0625, gy*.0625, 5, 6));
+            const int z = int(perlin2d(gx*0.03125, gy*0.03125, 16, 0, 24));
             _chunk[x][y][z] = CubeID::GRASS;
             for (int uz = z - 1; uz >= 0; uz--) {
                 _chunk[x][y][uz] = CubeID::DIRT;
@@ -22,46 +22,46 @@ void MyChunk::generate(int const& cx, int const& cy) {
     }
 }
 
-void MyChunk::renderCube(
+void MyChunk::registerCube(
     int const& x, int const& y, int const& z,
     six<Aftr::Tex> const& textures, six<bool> const& isBlank
 ) {
-    const float gx = quadSize * (x + 0.5f); //graphical/simulation location x
-    const float gy = quadSize * (y + 0.5f); //etc
-    const float gz = quadSize * (z + 0.5f); //etc
-    const float sh = quadSize / 2; //shift sides of cube by size/2 away from center of cube
+    const float gx = qs * x; //graphical/simulation location x
+    const float gy = qs * y; //etc
+    const float gz = qs * z; //etc
 
-    //If any neighboring block is empty, render the side of this cube that is facing towards that block
-    if (isBlank[0]) renderQuad(0, {gx-sh, gy, gz}, Aftr::QuadOrientation::qoYZ, textures[0]); // -x
-    if (isBlank[1]) renderQuad(1, {gx+sh, gy, gz}, Aftr::QuadOrientation::qoYZ, textures[1]); // +x
-    if (isBlank[2]) renderQuad(2, {gx, gy-sh, gz}, Aftr::QuadOrientation::qoXZ, textures[2]); // -y
-    if (isBlank[3]) renderQuad(3, {gx, gy+sh, gz}, Aftr::QuadOrientation::qoXZ, textures[3]); // +y
-    if (isBlank[4]) renderQuad(4, {gx, gy, gz-sh}, Aftr::QuadOrientation::qoXY, textures[4]); // -z
-    if (isBlank[5]) renderQuad(5, {gx, gy, gz+sh}, Aftr::QuadOrientation::qoXY, textures[5]); // +z
+    std::array<Aftr::Vector, 8> const v {
+        Aftr::Vector{   gx,    gy,    gz},
+        Aftr::Vector{   gx,    gy, gz+qs},
+        Aftr::Vector{   gx, gy+qs,    gz},
+        Aftr::Vector{   gx, gy+qs, gz+qs},
+        Aftr::Vector{gx+qs,    gy,    gz},
+        Aftr::Vector{gx+qs,    gy, gz+qs},
+        Aftr::Vector{gx+qs, gy+qs,    gz},
+        Aftr::Vector{gx+qs, gy+qs, gz+qs},
+    };
+
+    if (isBlank[0]) { vertexValues.append_range(fourAftrVecsAsFloats(v[0], v[1], v[3], v[2])); numQuads++; }
+    if (isBlank[1]) { vertexValues.append_range(fourAftrVecsAsFloats(v[4], v[5], v[7], v[6])); numQuads++; }
+    if (isBlank[2]) { vertexValues.append_range(fourAftrVecsAsFloats(v[0], v[1], v[5], v[4])); numQuads++; }
+    if (isBlank[3]) { vertexValues.append_range(fourAftrVecsAsFloats(v[2], v[3], v[7], v[6])); numQuads++; }
+    if (isBlank[4]) { vertexValues.append_range(fourAftrVecsAsFloats(v[0], v[2], v[6], v[4])); numQuads++; }
+    if (isBlank[5]) { vertexValues.append_range(fourAftrVecsAsFloats(v[1], v[3], v[7], v[5])); numQuads++; }
 }
 
-void MyChunk::renderQuad(
-    size_t const& face, Aftr::Vector const& position,
-    Aftr::QuadOrientation const& orientation, Aftr::Tex const& tex
-) {
-    Aftr::WOQuad* quad = Aftr::WOQuad::New(orientation, tex, quadSize, quadSize);
-    quad->upon_async_model_loaded([quad](){
-        Aftr::ModelMeshSkin& skin = quad->getModel()->getSkin();
-        skin.setAmbient(Aftr::aftrColor4f(.75f, .75f, .75f, 1.f));
-        /* skin.setDiffuse(Aftr::aftrColor4f(0.f,0.f,0.f,1.f));
-        skin.setMeshShadingType(Aftr::MESH_SHADING_TYPE::mstFLAT);
-        skin.setSpecular(Aftr::aftrColor4f(0.f,0.f,0.f,1.f));
-        skin.setSpecularCoefficient(1000); */
-    });
-    quad->useFrustumCulling = true;
-    quad->setPosition(position);
-    if (face == 0 || face == 3) quad->rotateAboutRelZ(std::numbers::pi);
-    if (face == 4) quad->rotateAboutRelX(std::numbers::pi);
-    (*worldLst)->push_back(quad);
-    //quads.push_back(quad);
+void MyChunk::render() {
+    rquads = Aftr::WORawQuads::New(vertexValues.data(), numQuads);
+    //rquads->getModel()->getSkin().getMultiTextureSet().at(0) = *ManagerTex::loadTexAsync(LMM("images/grass_side.png"));
+    (*worldLst)->push_back(rquads);
 }
 
-double MyChunk::perlin2d(double x, double y, double scale, int32_t octaves, double persistence) {
+double MyChunk::perlin2d(double x, double y, double scale, double shift, int32_t octaves, double persistence) {
     siv::PerlinNoise static const perlin(seed);
-    return scale * perlin.octave2D_01(double(x), double(y), octaves, persistence);
+    return scale * perlin.octave2D_01(double(x), double(y), octaves, persistence) + shift;
+}
+
+std::array<float, 12> MyChunk::fourAftrVecsAsFloats(
+    Aftr::Vector const& v1, Aftr::Vector const& v2, Aftr::Vector const& v3, Aftr::Vector const& v4
+) {
+    return { v1.x, v1.y, v1.z, v2.x, v2.y, v2.z, v3.x, v3.y, v3.z, v4.x, v4.y, v4.z };
 }

@@ -47,16 +47,11 @@ void Module::loadMap() {
    );
 
    {
-      grid.at(1,1,10) = CubeID::TEST;
-      keyboard[SDLK_1].onKeyDown = [this](){ grid.load(-1,-1); };
-      keyboard[SDLK_2].onKeyDown = [this](){ grid.load(-1, 0); };
-      keyboard[SDLK_3].onKeyDown = [this](){ grid.load(-1, 1); };
-      keyboard[SDLK_4].onKeyDown = [this](){ grid.load( 0,-1); };
-      keyboard[SDLK_5].onKeyDown = [this](){ grid.load( 0, 0); };
-      keyboard[SDLK_6].onKeyDown = [this](){ grid.load( 0, 1); };
-      keyboard[SDLK_7].onKeyDown = [this](){ grid.load( 1,-1); };
-      keyboard[SDLK_8].onKeyDown = [this](){ grid.load( 1, 0); };
-      keyboard[SDLK_9].onKeyDown = [this](){ grid.load( 1, 1); };
+      for (int cx = -10; cx < 10; cx++) {
+         for (int cy = -10; cy < 10; cy++) {
+            grid.load(cx,cy);
+         }
+      }
    }
 
    {
