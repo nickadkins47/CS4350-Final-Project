@@ -53,7 +53,7 @@ Main Milestones (in order of completion):
 - [x] (Apr 29th) Implement several other optimization techniques to improve the performance of the simulation.
 - [x] (Apr 30th) Code Review / Freeze
 - [x] (May 1st) Final Report
-- [ ] (May 2nd) Final Demo
+- [x] (May 2nd) Final Demo
 
 ### Optional / Extra Ideas (of no particular order):
 - [ ] Faint outline over the block you’re looking at.
